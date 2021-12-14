@@ -9,6 +9,13 @@ logger = logging.getLogger(__name__)
 from src.modules.specifications import TransactionSpecification
 from src.common.utils import (has_key, check_decimal_amount, validate_value)
 
+"""
+The class Transaction uses TransactionSpecification as parent class and inherit the properties/attributes.
+The main job of the Transaction class is to parse the transactions provied in the input file.
+Panda library is used to read the input from the fixed width class and it generates the datafram which is then further used to 
+process the requested business logic.
+"""
+
 class Transaction(TransactionSpecification):
     def __init__(self, directory, filename):
         logger.info(f"""Initializing the super class: {TransactionSpecification}""")
@@ -70,13 +77,19 @@ class Transaction(TransactionSpecification):
         logger.info(message)
 	    
 """
+TransactionRow class takes the input fields and use them to generate the desired output fields.
+
 The CSV has the following Headers
 - Client_Information
 - Product_Information
 - Total_Transaction_Amount
+
 Client_Information should be a combination of the CLIENT TYPE, CLIENT NUMBER, ACCOUNT NUMBER, SUBACCOUNT NUMBER fields from Input file
+
 Product_Information should be a combination of the EXCHANGE CODE, PRODUCT GROUP CODE, SYMBOL, EXPIRATION DATE
+
 Total_Transaction_Amount should be a Net Total of the (QUANTITY LONG - QUANTITY SHORT) values for each client per product
+
 """
 
 class TransactionRow():

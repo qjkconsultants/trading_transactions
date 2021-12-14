@@ -5,14 +5,26 @@ from src.static.output import OutputFile
 from src.static.logger import Logger as logger
 from src.common.utils import print_start_message, print_done_message
 
+"""Process Single Input File"""
 def process_single_file(input_directory, input_file, output_file):
     (summary_output_dict, errors) = InputFile.process_input_file(input_directory, input_file)
-    OutputFile.generate_output_files(summary_output_dict, output_file)
+    if not errors:
+        OutputFile.generate_output_files(summary_output_dict, output_file)
+    else: 
+        print_errors(errors)
 
+"""Process Multiple Input Files"""
 def process_files_in_directory(input_directory):
     (summary_output_dict, errors) = InputFile.process_input_files_in_directory(input_directory)
-    OutputFile.generate_output_files(summary_output_dict)
+    if not errors:
+        OutputFile.generate_output_files(summary_output_dict)
+    else: 
+        print_errors(errors)
 
+"""Print errors while parsing the input files data"""
+def print_errors(errors):
+    for error in errors:
+        print(f"""Errors: {error}""")
 
 if __name__ == "__main__":
     parser = OptionParser()

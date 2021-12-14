@@ -54,16 +54,9 @@ HEADER_DAILY_SUMMARY_REPORT = {
 	"filler": (176, 303),
 }
 
-def create_system_A_files_dirs():
-    if not os.path.exists(OUTPUT_DIR):
-        os.mkdir(OUTPUT_DIR)
-
-    if not os.path.exists(OUTPUT_DIR_PID):
-        os.mkdir(OUTPUT_DIR_PID)
-
-    if not os.path.exists(OUTPUT_DIR_DAILY_SUMMARY_REPORT):
-        os.mkdir(OUTPUT_DIR_DAILY_SUMMARY_REPORT)
-
+"""
+This class is used as the parent class and is inherited by the class defined in transaction.py.
+"""
 class TransactionSpecification:
     def __init__(self, directory, filename):
         self.directory = directory

@@ -30,7 +30,7 @@ class TestTradingTransactions(unittest.TestCase):
         expected_client = [1234, 4321]
         for index, row in self.dataframe_rows.iterrows():
            observed = row["client_number"]
-           self.assertTrue(observed in expected_client, f"""Invalid client number found in the file: {observed}. Expected clients should be one the numbers provided in the list: {expected_client}""")
+           self.assertTrue(observed in expected_client, f"""Invalid client number found in the file: {observed}. Expected clients should be one the numbers provided in the list: {expected_client} - Line Number: {index+1}""")
 
     """First 3 characters of the files should be 315"""
     def testRecordCode(self):

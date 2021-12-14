@@ -10,15 +10,21 @@ from src.modules.transactions import Transaction
 import logging
 logger = logging.getLogger(__name__)
 
+"""
+This static class is used to read the input file and parse it to send back the output dictionary to the Output static class 
+"""
+
 class InputFile:
     @staticmethod
     def process_input_files_in_directory(input_file_directory):
+        logger.info(f"""Processing files in the directory - {input_file_directory}""")
         exchange_files = InputFile.list_files(input_file_directory)
         summary_output_dict, errors = InputFile.parse_input_files(input_file_directory, exchange_files)
         return (summary_output_dict, errors)
     
     @staticmethod
     def process_input_file(input_file_directory, input_file):
+        logger.info(f"""Processing single file - {input_file_directory}/{input_file}""")
         exchange_files = [input_file]
         summary_output_dict, errors = InputFile.parse_input_files(input_file_directory, exchange_files)
         return (summary_output_dict, errors)
@@ -29,11 +35,13 @@ class InputFile:
         with os.scandir(dir_) as it:
             for entry in it:
                 if not entry.name.startswith(".") and not entry.name.startswith("~") and entry.is_file():
+                    logger.info(f"""Adding input files to the list for processing - {entry.name}""")
                     files.append(entry.name)
         return files
 
     @staticmethod
     def parse_input_files(dir_: str, files: list) -> dict:
+        logger.info(f"""Process ID - {PID}""")
         print_start_message("foreign exchange files", PID)
         records = {}
         counter = 1
@@ -49,7 +57,7 @@ class InputFile:
                 records[ti.key] = ti
             except IndexError:
                 # handle exception when there is a column missing or an issue with the file.
-                errors.append(new_error(f"{dir_}/{file}", "", "ERROR PARSING FILE!!!"))
+                errors.append(f"{dir_}/{file} - ERROR PARSING FILE!!!")
                 logger.error(f"""Error Parsing file {dir_}/{file}""")
             counter += 1
         print()
